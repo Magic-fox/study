@@ -2,24 +2,24 @@
 
 require __DIR__.'/vendor/autoload.php';
 
-$site    = new Site('pages');
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+$request = Request::createFromGlobals();
+$site    = new Site('pages', $request);
 $pages   = $site->getPages();
 $current = $site->getCurrent();
 
-?>
-<ul>
-	<?php foreach ($pages as $page) { ?>
-	<li>
-		<a href="<?php echo $page->getLink(); ?>" class="link" >
-			<?php echo $page->getTitle(); ?>
-		</a>
-	</li>
-	<?php } ?>
-</ul>
-<div>
-	<?php
-		if (file_exists($current->getFile())) {
-			include($current->getFile());
-		}
-	?>
-</div>
+$response = new Response();
+
+if ($current) {
+    ob_start();
+    include('template.php');
+    $data = ob_get_clean();
+    $response->setContent($data);
+} else {
+    $response->setStatusCode(404);
+    $response->setContent('Not Found');
+}
+
+$response->send();

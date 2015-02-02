@@ -1,7 +1,5 @@
 <?php
 
-use Symfony\Component\HttpFoundation\Request;
-
 class Site
 {
 	private $dir;
@@ -10,10 +8,10 @@ class Site
 
 	private $current;
 
-	public function __construct($dir)
+	public function __construct($dir, $request)
 	{
 		$this->dir     = $dir;
-		$this->request = Request::createFromGlobals();
+		$this->request = $request;
 	}
 
 	public function getPages()
