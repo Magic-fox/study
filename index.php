@@ -12,7 +12,7 @@ foreach ($sites as $site) {
 <ul>
 	<?php foreach ($pages as $page) { ?>
 	<li>
-		<a href="<?php echo $page->getLink(); ?>" >
+		<a href="<?php echo $page->getLink(); ?>" class="link" >
 			<?php echo $page->getTitle(); ?>
 		</a>
 	</li>
