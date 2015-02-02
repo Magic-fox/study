@@ -1,21 +1,26 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Request;
+
 class Site
 {
 	private $dir;
+
+	private $request;
 
 	private $current;
 
 	public function __construct($dir)
 	{
-		$this->dir = $dir;
+		$this->dir     = $dir;
+		$this->request = Request::createFromGlobals();
 	}
 
 	public function getPages()
 	{
-		$return = [];
-		$pages  = glob($this->dir.'/*.html');
-		$current = isset($_GET['page']) ? $_GET['page'] : current($pages);
+		$return  = [];
+		$pages   = glob($this->dir.'/*.html');
+		$current = $this->request->get('page', current($pages));
 
 		foreach ($pages as $key => $value) {
 			$value = str_replace([$this->dir.'/', '.html'], '', $value);

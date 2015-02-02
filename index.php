@@ -1,13 +1,11 @@
 <?php
 
-require 'Site.php';
-require 'Page.php';
+require __DIR__.'/vendor/autoload.php';
 
-$sites  = [new Site('pages'), new Site('other')];
+$site    = new Site('pages');
+$pages   = $site->getPages();
+$current = $site->getCurrent();
 
-foreach ($sites as $site) {
-	$pages   = $site->getPages();
-	$current = $site->getCurrent();
 ?>
 <ul>
 	<?php foreach ($pages as $page) { ?>
@@ -25,6 +23,3 @@ foreach ($sites as $site) {
 		}
 	?>
 </div>
-<?php
-	}
-?>
